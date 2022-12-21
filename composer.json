@@ -19,7 +19,7 @@
         "drupal/core-composer-scaffold": "^9.4",
         "drupal/core-project-message": "^9.4",
         "drupal/core-recommended": "^9.4",
-        "drupal/devel": "^5.0",
+        "drupal/devel": "5.1",
         "drupal/webprofiler": "^9.0"
     },
     "conflict": {
@@ -29,9 +29,10 @@
     "prefer-stable": true,
     "require-dev": {
         "drupal/core-dev": "~9.0",
-        "drush/drush": "~10.0",
         "drupal/drupal-extension": "~4.0",
-        "emuse/behat-html-formatter": "^0.2.0"
+        "drush/drush": "~10.0",
+        "emuse/behat-html-formatter": "^0.2.0",
+        "kint-php/kint": "^5.0"
     },
     "config": {
         "allow-plugins": {
