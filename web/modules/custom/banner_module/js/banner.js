@@ -7,42 +7,20 @@ jQuery(document).ready(function () {
     autoplaySpeed: 500,
     dots: true,
     mobileFirst: true,
+    slideToShow: 1,
+    centerMode: true,
 
     responsive: [
       {
-        breakpoint: 1200,
+        breakpoint: 600,
         settings: {
           arrows: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 900,
-        settings: {
-          arrows: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 3,
-        },
-      },
-      {
-        breakpoint: 768,
-        settings: {
-          arrows: true,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 2,
         },
       },
       {
         breakpoint: 480,
         settings: {
           arrows: false,
-          centerMode: true,
-          centerPadding: "40px",
-          slidesToShow: 1,
         },
       },
     ],
