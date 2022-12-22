@@ -8,8 +8,13 @@ function banner_module_theme($existing, $type, $theme, $path)
     return [
         'my_template' => [
             'variables' => [
-                'test_var' => NULL
+                'test_var' => ''
             ],
         ],
+        'banner' => [
+            'variables' => [
+                'position' => ''
+            ]
+        ]
     ];
 }

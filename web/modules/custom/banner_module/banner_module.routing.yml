@@ -13,3 +13,11 @@ banner_module.another:
     _title: 'Another Method'
   requirements: 
     _permission: 'access content' 
+
+banner_module.banner:
+  path: '/banner' 
+  defaults: 
+    _controller: '\Drupal\banner_module\Controller\BannerController::banner'
+    _title: 'Banner'
+  requirements: 
+    _permission: 'access content' 

@@ -37,3 +37,17 @@ global-library:
     js/main.js: {}
   dependencies:
     - core/jquery
+
+banner-slick:
+  verson: 1.x
+  css:
+    theme:
+      https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css:
+        { type: external, minified: true }
+      https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css:
+        { type: external, minified: true }
+      css/banner.css: {}
+  js:
+    js/banner.js: {}
+    https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js:
+      { type: external, minified: true }
