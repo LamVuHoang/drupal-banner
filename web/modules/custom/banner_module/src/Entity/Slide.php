@@ -13,13 +13,37 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *
  * @ContentEntityType(
  *      id = "slide",
- *      label = @Translation("slide"),
+ *      label = @Translation("Slide"),
  *      admin_permission = "administer site configuration",
  *      base_table = "slide",
  *      entity_keys = {
  *          "id" = "id",
+ *          "label" = "title",
  *          "uuid" = "uuid",
  *          "label" = "title"
+ *      },
+ * 
+ *      handlers = {
+ *          "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
+ *          "list_builder" = "Drupal\banner_module\SlideListBuilder",
+ *          "form" = {
+ *              "default" = "Drupal\banner_module\Form\SlideForm",
+ *              "add" = "Drupal\banner_module\Form\SlideForm",
+ *              "edit" = "Drupal\banner_module\Form\SlideForm",
+ *              "delete" = "Drupal\Core\Entity\ContentEntityDeleteForm",
+ *          },
+ *          "route_provider" = {
+ *              "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider"
+ *          },
+ *          "views_data" = "Drupal\banner_module\Entity\SlideViewsData",
+ *      },
+ * 
+ *      links = {
+ *          "canonical" = "/admin/structure/slide/{slide}",
+ *          "add-form" = "/admin/structure/slide/add",
+ *          "edit-form" = "/admin/structure/slide/{slide}/edit",
+ *          "delete-form" = "/admin/structure/slide/{slide}/delete",
+ *          "collection" = "/admin/structure/slide",
  *      },
  * )
  */
@@ -34,34 +58,29 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
 
         $fields['title'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Slide Title'))
-            ->setDescription(t('Title of the slide'))
-            ->setDisplayOptions('form', [
-                'weight' => 1
-            ]);
+            ->setDescription(t('Title of the slide'));
 
         $fields['description'] = BaseFieldDefinition::create('text')
             ->setLabel(t('Slide Description'))
-            ->setDescription(t('Description of the slide'))
-            ->setDisplayOptions('form', [
-                'type' => 'string_textfield',
-                'weight' => 2,
-            ]);
+            ->setDescription(t('Description of the slide'));
+
+
 
         $fields['position_title'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Position Title'))
-            ->setDescription('Left || Center || Right');
+            ->setDescription('Position of the Slide title');
 
         $fields['view_mode'] = BaseFieldDefinition::create('string')
             ->setLabel(t('View mode'))
             ->setDescription(t('Light || Dark'));
 
-        $fields['image'] = BaseFieldDefinition::create('image')
-            ->setLabel(t('Image'))
-            ->setDescription(t('Slide Image'))
-            ->setDisplayOptions('form', [
-                'type' => 'image_image',
-                'weight' => 5,
-            ]);
+        // $fields['image'] = BaseFieldDefinition::create('image')
+        //     ->setLabel(t('Image'))
+        //     ->setDescription(t('Slide Image'))
+        //     ->setDisplayOptions('form', [
+        //         'type' => 'image_image',
+        //         'weight' => 5,
+        //     ]);
 
 
         $fields['action_button_label'] = BaseFieldDefinition::create('string')
@@ -152,5 +171,45 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
     {
         $this->set('action_link', $actionLink);
         return $this;
+    }
+
+    public function getChanged()
+    {
+        return $this->get('changed')->value;
+    }
+    public function setChanged($changed)
+    {
+        $this->set('changed', $changed);
+        return $this;
+    }
+
+    public function getUpdateTimeAgo()
+    {
+        $timeDifferences = time() - $this->getChanged();
+
+        if ($timeDifferences < 1) {
+            return 'less than 1 second ago';
+        }
+
+        $condition = array(
+            12 * 30 * 24 * 60 * 60  =>  'year',
+            30 * 24 * 60 * 60       =>  'month',
+            24 * 60 * 60            =>  'day',
+            60 * 60                 =>  'hour',
+            60                      =>  'minute',
+            1                       =>  'second'
+        );
+
+        foreach ($condition as $timePeriod => $measurement) {
+            $timeCategory = $timeDifferences / $timePeriod;
+
+            if ($timeCategory >= 1) {
+                $timeCategoryRounded = round($timeCategory);
+                return $timeCategoryRounded . ' ' .
+                    $measurement .
+                    ($timeCategoryRounded > 1 ? 's' : '') .
+                    ' ago';
+            }
+        }
     }
 }
