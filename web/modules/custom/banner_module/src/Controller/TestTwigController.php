@@ -11,11 +11,23 @@ use Drupal\Core\Controller\ControllerBase;
 
 class TestTwigController extends ControllerBase
 {
+
     public function test()
     {
+        $abc = [
+            'a', 'b', 'c'
+        ];
+        $ids = $this->entityTypeManager()
+            ->getStorage('slide')->getQuery()->execute();
+        $entity = $this->entityTypeManager()
+            ->getStorage('slide')->loadMultiple($ids);
+        // $database = \Drupal::database();
+        // $entity = 
+
         return [
-            '#theme' => 'my_template',
-            '#test_var' => $this->t('Test Value'),
+            '#theme' => 'test',
+            '#entity' => $entity,
+            '#abc' => $abc
         ];
     }
 
