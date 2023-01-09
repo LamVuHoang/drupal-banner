@@ -7,6 +7,8 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Site\Settings;
+use Drupal\Core\StreamWrapper\StreamWrapperManager;
 
 /**
  * Defines the slide entity.
@@ -86,13 +88,16 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
                 'label' => 'above',
             ]);
 
-        // $fields['image'] = BaseFieldDefinition::create('image')
-        //     ->setLabel(t('Image'))
-        //     ->setDescription(t('Slide Image'))
-        //     ->setDisplayOptions('form', [
-        //         'type' => 'image_image',
-        //         'weight' => 5,
-        //     ]);
+        $fields['image'] = BaseFieldDefinition::create('image')
+            ->setLabel(t('Image'))
+            ->setDescription(t('Slide Image'))
+            ->setDisplayOptions('form', [
+                'type' => 'image_image',
+                'weight' => 5,
+            ])
+            ->setDisplayOptions('view', [
+                'label' => 'above'
+            ]);
 
 
         $fields['action_button_label'] = BaseFieldDefinition::create('string')
@@ -163,7 +168,7 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
 
     public function getImage()
     {
-        return $this->get('image')->value;
+        return $this->get('image')->entity;
     }
     public function setImage($image)
     {
@@ -229,5 +234,11 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
                     ' ago';
             }
         }
+    }
+
+    public function getRelativeUrl($size = 'large')
+    {
+        $style = \Drupal::entityTypeManager()->getStorage('image_style')->load($size);
+        return $style->buildUrl($this->getImage()->uri->value);
     }
 }

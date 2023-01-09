@@ -12,7 +12,7 @@ class SlideListBuilder extends EntityListBuilder
      */
     public function buildHeader()
     {
-        $header['id'] = $this->t('Thumbnail');
+        $header['thumbnail'] = $this->t('Thumbnail');
         $header['title'] = $this->t('Title');
         $header['changed'] = $this->t('Updated');
         $header['operations'] = $this->t('Action');
@@ -25,7 +25,15 @@ class SlideListBuilder extends EntityListBuilder
     public function buildRow(EntityInterface $entity)
     {
 
-        $row['id'] = $entity->id();
+        $row['thumbnail'] = [];
+        if ($entity->getRelativeUrl('thumbnail')) {
+            $row['thumbnail']['data'] = [
+                '#type' => 'image_style',
+                '#style_name' => 'thumbnail',
+                '#uri' => $entity->getRelativeUrl('thumbnail'),
+                '#height' => 50,
+            ];
+        }
         $row['title'] = $entity->toLink();
         $row['changed'] = $entity->getUpdateTimeAgo();
         return $row + parent::buildRow($entity);
