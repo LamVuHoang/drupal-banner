@@ -14,9 +14,6 @@ class TestTwigController extends ControllerBase
 
     public function test()
     {
-        $abc = [
-            'a', 'b', 'c'
-        ];
         $ids = $this->entityTypeManager()
             ->getStorage('slide')->getQuery()->execute();
         $entity = $this->entityTypeManager()
@@ -27,7 +24,6 @@ class TestTwigController extends ControllerBase
         return [
             '#theme' => 'test',
             '#entity' => $entity,
-            '#abc' => $abc
         ];
     }
 

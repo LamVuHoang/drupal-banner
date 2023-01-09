@@ -19,7 +19,6 @@ function banner_module_theme($existing, $type, $theme, $path)
         'test' => [
             'variables' => [
                 'entity' => [],
-                'abc' => []
             ]
         ]
     ];

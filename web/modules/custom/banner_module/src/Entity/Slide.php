@@ -35,7 +35,6 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *          "route_provider" = {
  *              "html" = "Drupal\Core\Entity\Routing\AdminHtmlRouteProvider"
  *          },
- *          "views_data" = "Drupal\banner_module\Entity\SlideViewsData",
  *      },
  * 
  *      links = {
@@ -45,6 +44,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  *          "delete-form" = "/admin/structure/slide/{slide}/delete",
  *          "collection" = "/admin/structure/slide",
  *      },
+ * 
  * )
  */
 
@@ -58,21 +58,33 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
 
         $fields['title'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Slide Title'))
-            ->setDescription(t('Title of the slide'));
+            ->setDescription(t('Title of the slide'))
+            ->setDisplayOptions('view', [
+                'label' => 'above',
+                'weight' => -5
+            ]);
+
 
         $fields['description'] = BaseFieldDefinition::create('text')
             ->setLabel(t('Slide Description'))
-            ->setDescription(t('Description of the slide'));
-
-
+            ->setDescription(t('Description of the slide'))
+            ->setDisplayOptions('view', [
+                'label' => 'above',
+            ]);
 
         $fields['position_title'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Position Title'))
-            ->setDescription('Position of the Slide title');
+            ->setDescription('Position of the Slide title')
+            ->setDisplayOptions('view', [
+                'label' => 'above',
+            ]);
 
         $fields['view_mode'] = BaseFieldDefinition::create('string')
             ->setLabel(t('View mode'))
-            ->setDescription(t('Light || Dark'));
+            ->setDescription(t('Light || Dark'))
+            ->setDisplayOptions('view', [
+                'label' => 'above',
+            ]);
 
         // $fields['image'] = BaseFieldDefinition::create('image')
         //     ->setLabel(t('Image'))
@@ -85,11 +97,17 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
 
         $fields['action_button_label'] = BaseFieldDefinition::create('string')
             ->setLabel(t('Action Button Label'))
-            ->setDescription(t('Label in Button reference to a link'));
+            ->setDescription(t('Label in Button reference to a link'))
+            ->setDisplayOptions('view', [
+                'type' => 'string'
+            ]);
 
         $fields['action_link'] = BaseFieldDefinition::create('uri')
             ->setLabel(t('Action Link'))
-            ->setDescription(t('Link of Action button'));
+            ->setDescription(t('Link of Action button'))
+            ->setDisplayOptions('view', [
+                'label' => 'above',
+            ]);
 
         //  Timestamps
         $fields['created'] = BaseFieldDefinition::create('created')
