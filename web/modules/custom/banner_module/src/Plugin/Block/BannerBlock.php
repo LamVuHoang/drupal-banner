@@ -4,6 +4,7 @@ namespace Drupal\banner_module\Plugin\Block;
 
 use Drupal\Core\Block\BlockBase;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
+use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -14,7 +15,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *      admin_label = @Translation("Block to show Banner"),
  * )
  */
-class BannerBlock extends BlockBase
+class BannerBlock extends BlockBase implements ContainerFactoryPluginInterface
 {
     /**
      * @var \Drupal\Core\Entity\EntityTypeManagerInterface
@@ -39,10 +40,10 @@ class BannerBlock extends BlockBase
      * {@inheritdoc}
      */
     public static function create(
+        ContainerInterface $container,
         array $configuration,
         $plugin_id,
         $plugin_definition,
-        ContainerInterface $container
     ) {
         return new static(
             $configuration,
@@ -54,8 +55,11 @@ class BannerBlock extends BlockBase
 
     public function build()
     {
+        $abc = ['a', 'b', 'c'];
         return [
-            '#markup' => $this->t('This is my Banner Block')
+            '#theme' => 'banner',
+            '#abc' => $abc
+            // '#markup' => $this->t('This is my Banner Block')
         ];
     }
 }
