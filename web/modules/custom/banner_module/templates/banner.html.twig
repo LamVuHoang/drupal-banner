@@ -1,14 +1,12 @@
 {{attach_library('banner_module/global-library')}}
 {{attach_library('banner_module/banner-slick')}}
 
-{# <h1 class="text-red">Banner</h1>
-
-{{position}}
-
 <div class="your-class">
-	<div class="image-container">
-		<img src="https://picsum.photos/id/1/1600/400"/>
-	</div>
+	{% for el in slide %}
+		<div class="image-container">
+			{{ el.getSlideTitle }}
+		</div>
+	{% endfor %}
 	<div class="image-container">
 		<img src="https://picsum.photos/id/20/1600/400"/>
 	</div>
@@ -35,8 +33,4 @@
 	</div>
 </div>
 
-<section class="bannerHere"></section> #}
-
-{% for el in abc %}
-	<h1>{{el}}</h1>
-{% endfor %}
+<section class="bannerHere"></section>

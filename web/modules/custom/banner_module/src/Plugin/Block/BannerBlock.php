@@ -55,11 +55,13 @@ class BannerBlock extends BlockBase implements ContainerFactoryPluginInterface
 
     public function build()
     {
-        $abc = ['a', 'b', 'c'];
+        $ids = $this->entityTypeManager
+            ->getStorage('slide')->getQuery()->execute();
+        $slide = $this->entityTypeManager
+            ->getStorage('slide')->loadMultiple($ids);
         return [
             '#theme' => 'banner',
-            '#abc' => $abc
-            // '#markup' => $this->t('This is my Banner Block')
+            '#slide' => $slide
         ];
     }
 }

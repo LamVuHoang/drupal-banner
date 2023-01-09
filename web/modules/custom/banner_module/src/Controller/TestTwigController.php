@@ -18,8 +18,6 @@ class TestTwigController extends ControllerBase
             ->getStorage('slide')->getQuery()->execute();
         $entity = $this->entityTypeManager()
             ->getStorage('slide')->loadMultiple($ids);
-        // $database = \Drupal::database();
-        // $entity = 
 
         return [
             '#theme' => 'test',
