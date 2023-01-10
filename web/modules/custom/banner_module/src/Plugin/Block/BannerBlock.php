@@ -57,11 +57,11 @@ class BannerBlock extends BlockBase implements ContainerFactoryPluginInterface
     {
         $ids = $this->entityTypeManager
             ->getStorage('slide')->getQuery()->execute();
-        $slide = $this->entityTypeManager
+        $entities = $this->entityTypeManager
             ->getStorage('slide')->loadMultiple($ids);
         return [
             '#theme' => 'banner',
-            '#slide' => $slide
+            '#entities' => $entities
         ];
     }
 }

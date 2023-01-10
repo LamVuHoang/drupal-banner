@@ -132,4 +132,19 @@ class SlideForm extends ContentEntityForm
             ['slide' => $entity->id()]
         );
     }
+
+    public function validateForm(
+        array &$form,
+        FormStateInterface $formStateInterface
+    ) {
+        if (strlen($formStateInterface->getValue('title')) > 100) {
+            $formStateInterface->setErrorByName('title', $this->t('Title should smaller than 100 chars'));
+        }
+
+        if (strlen($formStateInterface->getValue('description')) > 255) {
+            $formStateInterface->setErrorByName('description', $this->t('Description should smaller than 255 chars'));
+        }
+
+        parent::validateForm($form, $formStateInterface);
+    }
 }

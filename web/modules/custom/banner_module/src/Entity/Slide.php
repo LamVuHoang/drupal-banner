@@ -62,6 +62,9 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
             ->setDisplayOptions('view', [
                 'label' => 'above',
                 'weight' => -5
+            ])
+            ->setSettings([
+                'max_length' => 100
             ]);
 
 
@@ -70,6 +73,9 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
             ->setDescription(t('Description of the slide'))
             ->setDisplayOptions('view', [
                 'label' => 'above',
+            ])
+            ->setSettings([
+                'max_length' => 255
             ]);
 
         $fields['position_title'] = BaseFieldDefinition::create('string')
