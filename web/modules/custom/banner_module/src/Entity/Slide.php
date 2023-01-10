@@ -7,8 +7,6 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
-use Drupal\Core\Site\Settings;
-use Drupal\Core\StreamWrapper\StreamWrapperManager;
 
 /**
  * Defines the slide entity.

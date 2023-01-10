@@ -3,34 +3,21 @@
 
 <div class="your-class">
 	{% for el in slide %}
-		<div class="image-container">
+		<div class="image-container {{ el.getViewMode }}">
 			<img src="{{ el.getRelativeUrl }}"/>
+			<span class="title {{ el.getPositionTitle }}">
+				{{ el.getSlideTitle }}
+			</span>
+			<span class="description">
+				{{ el.getSlideDescription }}
+			</span>
+			<div class="read-more">
+				<a target="_blank" href="{{ el.getActionLink }}">
+					{{ el.getActionButtonLabel }}
+				</a>
+			</div>
 		</div>
 	{% endfor %}
-	<div class="image-container">
-		<img src="https://picsum.photos/id/20/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/35/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/41/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/53/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/64/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/77/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/89/1600/400"/>
-	</div>
-	<div class="image-container">
-		<img src="https://picsum.photos/id/96/1600/400"/>
-	</div>
 </div>
 
 <section class="bannerHere"></section>

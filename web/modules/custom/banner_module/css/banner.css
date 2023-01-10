@@ -8,3 +8,74 @@ button.slick-next::before {
     color: blue;
     font-size: 6vh;
 }
+
+.image-container {
+    position: relative;
+}
+
+.title {
+    position: absolute;
+    font-size: xx-large;
+    font-weight: bold;
+    top: 5%;
+}
+
+.description {
+    position: absolute;
+    text-align: justify;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.left {
+    left: 5%;
+}
+
+.right {
+    right: 5%;
+}
+
+.center {
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.read-more {
+    position: absolute;
+    bottom: 20%;
+}
+
+.dark span {
+    padding: 0.1vh 0.2vw;
+    color: white;
+    background-color: rgba(177, 177, 177, 0.5);
+}
+
+.light span {
+    color: black;
+    padding: 0.1em 0.2em;
+    background-color: rgba(253, 253, 253, 0.5);
+}
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+    padding: 2vh 2vw;
+    text-decoration: none;
+    border-radius: 2em;
+    font-weight: bold;
+}
+
+.dark a {
+    color: red;
+    background-color: yellow;
+    border: yellow;
+}
+
+.light a {
+    color: white;
+    background-color: blue;
+    border: blue;
+
+}
