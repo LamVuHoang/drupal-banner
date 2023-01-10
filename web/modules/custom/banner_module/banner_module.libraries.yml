@@ -37,6 +37,8 @@ global-library:
     js/main.js: {}
   dependencies:
     - core/jquery
+    - core/drupal
+    - core/jquery.once
 
 banner-slick:
   verson: 1.x
