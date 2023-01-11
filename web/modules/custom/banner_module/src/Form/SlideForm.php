@@ -9,6 +9,8 @@ use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\media\Entity\Media;
+use Drupal\file\Entity\File;
 
 /**
  * Form for Creating and Editing Slide
@@ -48,9 +50,9 @@ class SlideForm extends ContentEntityForm
      */
     public function form(
         array $form,
-        FormStateInterface $formStateInterface
+        FormStateInterface $form_state
     ) {
-        $form = parent::form($form, $formStateInterface);
+        $form = parent::form($form, $form_state);
 
         $form['title'] = [
             '#type' => 'textfield',
@@ -90,6 +92,23 @@ class SlideForm extends ContentEntityForm
             '#options' => $viewMode,
         ];
 
+        $form['image'] = [
+            '#type' => 'managed_file',
+            '#title' => $this->t('Image'),
+            '#upload_validators' => array(
+                'file_validate_extensions' => array('gif png jpg jpeg'),
+                'file_validate_size' => array(10000000),
+            ),
+            '#upload_location' => 'public://',
+            '#default_value' => array($this->entity->getImageFid())
+        ];
+
+        $form['image_alt'] = [
+            '#type' => 'textfield',
+            '#title'=> $this->t('Image alt'),
+            // '#default_value' => $this->entity->getImageAlt()
+        ];
+
         $form['action_button_label'] = [
             '#type' => 'textfield',
             '#title' => $this->t('Action button'),
@@ -111,10 +130,10 @@ class SlideForm extends ContentEntityForm
      */
     public function save(
         array $form,
-        FormStateInterface $formStateInterface
+        FormStateInterface $form_state
     ) {
         $entity = $this->entity;
-        $status = parent::save($form, $formStateInterface);
+        $status = parent::save($form, $form_state);
 
         switch ($status) {
             case SAVED_NEW:
@@ -127,7 +146,7 @@ class SlideForm extends ContentEntityForm
                     '%label' => $entity->label(),
                 ]));
         }
-        $formStateInterface->setRedirect(
+        $form_state->setRedirect(
             'entity.slide.canonical',
             ['slide' => $entity->id()]
         );
@@ -135,16 +154,16 @@ class SlideForm extends ContentEntityForm
 
     public function validateForm(
         array &$form,
-        FormStateInterface $formStateInterface
+        FormStateInterface $form_state
     ) {
-        if (strlen($formStateInterface->getValue('title')) > 100) {
-            $formStateInterface->setErrorByName('title', $this->t('Title should smaller than 100 chars'));
+        if (strlen($form_state->getValue('title')) > 100) {
+            $form_state->setErrorByName('title', $this->t('Title should smaller than 100 chars'));
         }
 
-        if (strlen($formStateInterface->getValue('description')) > 255) {
-            $formStateInterface->setErrorByName('description', $this->t('Description should smaller than 255 chars'));
+        if (strlen($form_state->getValue('description')) > 255) {
+            $form_state->setErrorByName('description', $this->t('Description should smaller than 255 chars'));
         }
 
-        parent::validateForm($form, $formStateInterface);
+        parent::validateForm($form, $form_state);
     }
 }

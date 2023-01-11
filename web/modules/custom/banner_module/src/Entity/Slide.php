@@ -95,10 +95,10 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
         $fields['image'] = BaseFieldDefinition::create('image')
             ->setLabel(t('Image'))
             ->setDescription(t('Slide Image'))
-            ->setDisplayOptions('form', [
-                'type' => 'image_image',
-                'weight' => 5,
-            ])
+            // ->setDisplayOptions('form', [
+            //     'type' => 'image_image',
+            //     'weight' => 5,
+            // ])
             ->setDisplayOptions('view', [
                 'label' => 'above'
             ]);
@@ -179,6 +179,14 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
         $this->set('image', $image);
         return $this;
     }
+    public function getImageFid()
+    {
+        return $this->get('image')->entity->fid->value;
+    }
+    // public function getImageAlt()
+    // {
+    //     return $this->get('image')->entity->alt->value;
+    // }
 
     public function getActionButtonLabel()
     {
@@ -240,7 +248,7 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
         }
     }
 
-    public function getRelativeUrl($size = 'large')
+    public function getRelativeUrl($size = 'large'): string
     {
         $style = \Drupal::entityTypeManager()->getStorage('image_style')->load($size);
         return $style->buildUrl($this->getImage()->uri->value);
