@@ -25,14 +25,15 @@ class SlideListBuilder extends EntityListBuilder
     public function buildRow(EntityInterface $entity)
     {
 
-        $row['thumbnail'] = [];
-        if ($entity->getRelativeUrl('thumbnail')) {
+        if ($entity->getImageUri()) {
             $row['thumbnail']['data'] = [
-                '#type' => 'image_style',
+                '#theme' => 'image_style',
                 '#style_name' => 'thumbnail',
-                '#uri' => $entity->getRelativeUrl('thumbnail'),
+                '#uri' => $entity->getImageUri(),
                 '#height' => 50,
             ];
+        } else {
+            $row['thumbnail'] = [];
         }
         $row['title'] = $entity->toLink();
         $row['changed'] = $entity->getUpdateTimeAgo();

@@ -170,6 +170,9 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
         return $this;
     }
 
+    /**
+     * Get and Set Image values
+     */
     public function getImage()
     {
         return $this->get('image')->entity;
@@ -181,12 +184,16 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
     }
     public function getImageFid()
     {
-        return $this->get('image')->entity->fid->value;
+        $img = $this->getImage();
+        if($img) return $img->fid->value;
+        return '';
     }
-    // public function getImageAlt()
-    // {
-    //     return $this->get('image')->entity->alt->value;
-    // }
+    public function getImageUri()
+    {
+        $img = $this->getImage();
+        if($img) return $img->uri->value;
+        return '';
+    }
 
     public function getActionButtonLabel()
     {
