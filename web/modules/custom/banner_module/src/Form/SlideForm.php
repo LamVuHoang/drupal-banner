@@ -95,23 +95,25 @@ class SlideForm extends ContentEntityForm
         $form['image'] = [
             '#type' => 'managed_file',
             '#title' => $this->t('Image'),
+            '#required' => TRUE,
             '#upload_validators' => array(
                 'file_validate_extensions' => array('gif png jpg jpeg'),
                 'file_validate_size' => array(10000000),
             ),
-            '#upload_location' => 'public://',
+            '#upload_location' => 'public://' . date("Y-m"),
             '#default_value' => array($this->entity->getImageFid())
         ];
 
         $form['image_alt'] = [
             '#type' => 'textfield',
             '#title'=> $this->t('Image alt'),
-            // '#default_value' => $this->entity->getImageAlt()
+            '#default_value' => $this->entity->getImageAlt()
         ];
 
         $form['action_button_label'] = [
             '#type' => 'textfield',
             '#title' => $this->t('Action button'),
+            '#required' => TRUE,
             '#placeholder' => $this->t('Button label'),
             '#default_value' => $this->entity->getActionButtonLabel()
         ];
@@ -119,6 +121,7 @@ class SlideForm extends ContentEntityForm
         $form['action_link'] = [
             '#type' => 'url',
             '#placeholder' => $this->t('Action link'),
+            '#required' => TRUE,
             '#default_value' => $this->entity->getActionLink()
         ];
 

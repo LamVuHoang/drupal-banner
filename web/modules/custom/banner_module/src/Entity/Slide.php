@@ -7,6 +7,7 @@ use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\file\FileInterface;
 
 /**
  * Defines the slide entity.
@@ -48,7 +49,7 @@ use Drupal\Core\Entity\EntityTypeInterface;
  * )
  */
 
-class Slide extends ContentEntityBase implements ContentEntityInterface
+class Slide extends ContentEntityBase implements SlideInterface
 {
     use EntityChangedTrait;
 
@@ -130,41 +131,41 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
         return $fields;
     }
 
-    public function getSlideTitle()
+    public function getSlideTitle(): string
     {
         return $this->get('title')->value;
     }
-    public function setSlideTitle($title)
+    public function setSlideTitle(string $title): SlideInterface
     {
         $this->set('title', $title);
         return $this;
     }
 
-    public function getSlideDescription()
+    public function getSlideDescription(): string
     {
         return $this->get('description')->value;
     }
-    public function setSlideDescription($description)
+    public function setSlideDescription(string $description): SlideInterface
     {
         $this->set('description', $description);
         return $this;
     }
 
-    public function getPositionTitle()
+    public function getPositionTitle(): string
     {
         return $this->get('position_title')->value;
     }
-    public function setPositionTitle($position)
+    public function setPositionTitle(string $position): SlideInterface
     {
         $this->set('position_title', $position);
         return $this;
     }
 
-    public function getViewMode()
+    public function getViewMode(): string
     {
         return $this->get('view_mode')->value;
     }
-    public function setViewMode($viewMode)
+    public function setViewMode(string $viewMode): SlideInterface
     {
         $this->set('view_mode', $viewMode);
         return $this;
@@ -173,59 +174,76 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
     /**
      * Get and Set Image values
      */
-    public function getImage()
+    public function getImage(): FileInterface
     {
         return $this->get('image')->entity;
     }
-    public function setImage($image)
+    public function setImage($image): SlideInterface
     {
         $this->set('image', $image);
         return $this;
     }
-    public function getImageFid()
+    public function getImageFid(): int|string
     {
         $img = $this->getImage();
-        if($img) return $img->fid->value;
+        if ($img) return $img->fid->value;
         return '';
     }
-    public function getImageUri()
+    public function getImageUri(): string
     {
         $img = $this->getImage();
-        if($img) return $img->uri->value;
+        if ($img) return $img->uri->value;
         return '';
     }
 
-    public function getActionButtonLabel()
+    public function getImageAlt(): string
+    {
+        $img = $this->getImage();
+        if ($img) return $this->get('image')->alt;
+        return '';
+    }
+
+    public function getRelativeUrl(string $size = 'large'): string
+    {
+        $img = $this->getImage();
+        if ($img) {
+            $style = $this->entityTypeManager()->getStorage('image_style')->load($size);
+            return $style->buildUrl($this->getImageUri());
+        }
+        return '';
+    }
+
+    public function getActionButtonLabel(): string
     {
         return $this->get('action_button_label')->value;
     }
-    public function setActionButtonLabel($actionButtonLabel)
+    public function setActionButtonLabel(string $actionButtonLabel): SlideInterface
     {
         $this->set('action_button_label', $actionButtonLabel);
         return $this;
     }
 
-    public function getActionLink()
+    public function getActionLink(): string
     {
         return $this->get('action_link')->value;
     }
-    public function setActionLink($actionLink)
+    public function setActionLink(string $actionLink): SlideInterface
     {
         $this->set('action_link', $actionLink);
         return $this;
     }
 
-    public function getChanged()
+    public function getChanged(): int
     {
         return $this->get('changed')->value;
     }
-    public function setChanged($changed)
+    public function setChanged(int $changed): SlideInterface
     {
         $this->set('changed', $changed);
         return $this;
     }
 
-    public function getUpdateTimeAgo()
+    public function getUpdateTimeAgo(): string
     {
         $timeDifferences = time() - $this->getChanged();
 
@@ -253,11 +271,5 @@ class Slide extends ContentEntityBase implements ContentEntityInterface
                     ' ago';
             }
         }
-    }
-
-    public function getRelativeUrl($size = 'large'): string
-    {
-        $style = \Drupal::entityTypeManager()->getStorage('image_style')->load($size);
-        return $style->buildUrl($this->getImage()->uri->value);
     }
 }
