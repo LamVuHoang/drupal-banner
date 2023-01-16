@@ -3,12 +3,11 @@
 
   Drupal.behaviors.banner = {
     attach: function (context, settings) {
-      $(".your-class").slick({
+      $(".banner-class").slick({
         //  normal options
-        autoplay: true,
+        // autoplay: true,
         infinite: true,
         draggable: true,
-        autoplaySpeed: 500,
         dots: true,
         mobileFirst: true,
         slideToShow: 1,
@@ -16,23 +15,24 @@
 
         responsive: [
           {
-            breakpoint: 600,
+            // breakpoint: settings.toolbar.breakpoints["toolbar.standard"],
+            breakpoint: 851,
+          },
+          {
+            // breakpoint: settings.toolbar.breakpoints["toolbar.narrow"],
+            breakpoint: 560,
             settings: {
-              arrows: true,
+              arrows: false,
             },
           },
           {
-            breakpoint: 480,
+            breakpoint: 1,
             settings: {
               arrows: false,
             },
           },
         ],
       });
-
-      $(".bannerHere").html("Banner is in this place");
-    }
-  }
+    },
+  };
 })(Drupal, jQuery);
-
-

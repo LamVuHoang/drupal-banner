@@ -1,10 +1,10 @@
 {{attach_library('banner_module/global-library')}}
 {{attach_library('banner_module/banner-slick')}}
 
-<div class="your-class">
+<div class="banner-class">
 	{% for entity in entities %}
 		<div class="image-container {{ entity.getViewMode }}">
-			<img src="{{ entity.getRelativeUrl }}"/>
+			<img src="{{ entity.getRelativeUrl("wide") }}"/>
 			<span class="title {{ entity.getPositionTitle }}">
 				{{ entity.getSlideTitle }}
 			</span>
@@ -20,4 +20,5 @@
 	{% endfor %}
 </div>
 
-<section class="bannerHere"></section>
+
+<div id="test"></div>

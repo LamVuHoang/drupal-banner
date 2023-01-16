@@ -196,14 +196,14 @@ class Slide extends ContentEntityBase implements SlideInterface
         return '';
     }
 
-    public function getImageAlt(): string
+    public function getImageAlt()
     {
         $img = $this->getImage();
         if ($img) return $this->get('image')->alt;
         return '';
     }
 
-    public function getRelativeUrl(string $size = 'large'): string
+    public function getRelativeUrl(string $size = 'medium'): string
     {
         $img = $this->getImage();
         if ($img) {
