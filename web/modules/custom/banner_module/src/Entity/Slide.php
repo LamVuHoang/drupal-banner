@@ -3,7 +3,6 @@
 namespace Drupal\banner_module\Entity;
 
 use Drupal\Core\Entity\ContentEntityBase;
-use Drupal\Core\Entity\ContentEntityInterface;
 use Drupal\Core\Entity\EntityChangedTrait;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Entity\EntityTypeInterface;
@@ -68,7 +67,6 @@ class Slide extends ContentEntityBase implements SlideInterface
                 'max_length' => 100
             ]);
 
-
         $fields['description'] = BaseFieldDefinition::create('text')
             ->setLabel(t('Slide Description'))
             ->setDescription(t('Description of the slide'))
@@ -131,7 +129,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return $fields;
     }
 
-    public function getSlideTitle(): string
+    public function getSlideTitle()
     {
         return $this->get('title')->value;
     }
@@ -141,7 +139,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return $this;
     }
 
-    public function getSlideDescription(): string
+    public function getSlideDescription()
     {
         return $this->get('description')->value;
     }
@@ -151,7 +149,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return $this;
     }
 
-    public function getPositionTitle(): string
+    public function getPositionTitle()
     {
         return $this->get('position_title')->value;
     }
@@ -161,7 +159,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return $this;
     }
 
-    public function getViewMode(): string
+    public function getViewMode()
     {
         return $this->get('view_mode')->value;
     }
@@ -174,7 +172,7 @@ class Slide extends ContentEntityBase implements SlideInterface
     /**
      * Get and Set Image values
      */
-    public function getImage(): FileInterface
+    public function getImage()
     {
         return $this->get('image')->entity;
     }
@@ -189,7 +187,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         if ($img) return $img->fid->value;
         return '';
     }
-    public function getImageUri(): string
+    public function getImageUri()
     {
         $img = $this->getImage();
         if ($img) return $img->uri->value;
@@ -203,7 +201,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return '';
     }
 
-    public function getRelativeUrl(string $size = 'medium'): string
+    public function getRelativeUrl(string $size = 'medium')
     {
         $img = $this->getImage();
         if ($img) {
@@ -213,7 +211,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return '';
     }
 
-    public function getActionButtonLabel(): string
+    public function getActionButtonLabel()
     {
         return $this->get('action_button_label')->value;
     }
@@ -223,7 +221,7 @@ class Slide extends ContentEntityBase implements SlideInterface
         return $this;
     }
 
-    public function getActionLink(): string
+    public function getActionLink()
     {
         return $this->get('action_link')->value;
     }

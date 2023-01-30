@@ -1,3 +1,8 @@
 .text-red {
     color: red;
 }
+
+.preview-banner-slide-wrapper {
+    background-color: red;
+    height: 50px;
+}

@@ -7,10 +7,9 @@ use Drupal\Core\Entity\ContentEntityForm;
 use Drupal\Core\Entity\EntityRepositoryInterface;
 use Drupal\Core\Entity\EntityTypeBundleInfoInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Form\SubformState;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\media\Entity\Media;
-use Drupal\file\Entity\File;
 
 /**
  * Form for Creating and Editing Slide
@@ -101,12 +100,36 @@ class SlideForm extends ContentEntityForm
                 'file_validate_size' => array(10000000),
             ),
             '#upload_location' => 'public://' . date("Y-m"),
-            '#default_value' => array($this->entity->getImageFid())
+            '#default_value' => array($this->entity->getImageFid()),
+
+            '#ajax' => [
+                'callback' => [$this, 'previewBannerSlideCallback'],
+                'wrapper' => 'preview-banner-slide-wrapper'
+            ],
         ];
+
+        $form['preview_banner_slide'] = [
+            '#type' => 'hidden',
+            '#attributes' => [
+                'id' => 'preview-banner-slide-wrapper'
+            ],
+            '#open' => TRUE
+        ];
+
+        if ($form_state->getValue('image')) {
+            $form['preview_banner_slide']['#type'] = 'details';
+            $form['preview_banner_slide']['#title'] = 'Preview';
+            $form['preview_banner_slide']['#data'] = [
+                '#process' => [[
+                    get_class($this),
+                    'processPreviewBannerSlide'
+                ]],
+            ];
+        }
 
         $form['image_alt'] = [
             '#type' => 'textfield',
-            '#title'=> $this->t('Image alt'),
+            '#title' => $this->t('Image alt'),
             '#default_value' => $this->entity->getImageAlt()
         ];
 
@@ -168,5 +191,25 @@ class SlideForm extends ContentEntityForm
         }
 
         parent::validateForm($form, $form_state);
+    }
+
+    public function previewBannerSlideCallback(
+        $form,
+        FormStateInterface $form_state
+    ) {
+        return $form['preview_banner_slide'];
+    }
+
+    public static function processPreviewBannerSlide(
+        array &$element,
+        FormStateInterface $form_state
+    ) {
+        $plugin = $element['#plugin'];
+        $subform_state = SubformState::createForSubform(
+            $element,
+            $form_state->getCompleteForm(),
+            $form_state
+        );
+        return $plugin->buildConfigurationForm($element, $subform_state);
     }
 }

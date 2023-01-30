@@ -11,5 +11,9 @@ function banner_module_theme($existing, $type, $theme, $path)
                 'entities' => []
             ]
         ],
+        'single_slide' => [
+            'variables' => [
+            ]
+        ],
     ];
 }

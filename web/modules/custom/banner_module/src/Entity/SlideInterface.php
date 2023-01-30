@@ -14,26 +14,26 @@ interface SlideInterface extends ContentEntityInterface, EntityChangedInterface
     /**
      * Get and Set the Slide title
      */
-    public function getSlideTitle(): string;
+    public function getSlideTitle();
     public function setSlideTitle(string $title): SlideInterface;
 
 
     /**
      * Get and Set the Slide description.
      */
-    public function getSlideDescription(): string;
+    public function getSlideDescription();
     public function setSlideDescription(string $description): SlideInterface;
 
     /**
      * Get and Set the Slide position title
      */
-    public function getPositionTitle(): string;
+    public function getPositionTitle();
     public function setPositionTitle(string $position): SlideInterface;
 
     /**
      * Get and Set the Slide view mode
      */
-    public function getViewMode(): string;
+    public function getViewMode();
     public function setViewMode(string $position): SlideInterface;
 
     /**
@@ -41,7 +41,7 @@ interface SlideInterface extends ContentEntityInterface, EntityChangedInterface
      *
      * @return \Drupal\file\FileInterface
      */
-    public function getImage(): FileInterface;
+    public function getImage();
     
     /**
      * Sets the Slide image.
